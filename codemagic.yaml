@@ -4,9 +4,9 @@ environment:
 xcode: latest
 cocoapods: default
 scripts: 
- name: - Install Pods
+ name:Install Pods
 script: pod install
- name: - Build ipa
+ name:Build ipa
 script: >
 integrations:
 app_store_connect: MyConnect
