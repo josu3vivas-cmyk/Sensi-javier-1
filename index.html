@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Sensi Javier</title>
+<style>
+:root{--bg:#030511;--blue:#00aaff;--purple:#a000ff;--pink:#e500ff;--text:#f5f7ff}
+*{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 50% 0,#17004a 0,#05061a 42%,#02030b 100%);color:var(--text);font-family:Arial,sans-serif;min-height:100vh}
+.wrap{max-width:900px;margin:auto;padding:22px 16px 40px}
+h1{font-size:42px;margin:12px 0 4px;font-weight:900;font-style:italic;letter-spacing:-2px;background:linear-gradient(90deg,#00aaff,#a000ff,#ff00d4);-webkit-background-clip:text;color:transparent}
+.sub{color:#b9c5ff;margin-bottom:24px}.panel{border:1px solid #7a00ff;border-radius:24px;background:#06091bd9;box-shadow:0 0 28px #3d00ff55;padding:20px;margin:14px 0}
+.login{max-width:520px;margin:12vh auto}.login h2{margin-top:0;color:#35bfff}.input{width:100%;padding:16px;border-radius:14px;border:1px solid #4d6cff;background:#050718;color:white;font-size:17px;outline:none}
+button{width:100%;padding:16px;margin-top:12px;border:0;border-radius:16px;background:linear-gradient(90deg,#6200ff,#00aaff);color:white;font-weight:800;font-size:17px;box-shadow:0 0 20px #4500ff66}
+.err{color:#ff5b9a;margin-top:10px;min-height:20px}.hidden{display:none}
+.status{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.stat{padding:15px;border-radius:18px;background:#070b21;border:1px solid #4d20ff}.label{color:#58cfff;font-size:13px}.value{font-size:20px;font-weight:800;margin-top:5px}.ok{color:#28ff74}
+.keyrow{display:flex;justify-content:space-between;align-items:center;gap:14px}.timer{font-size:27px;color:#49cfff;font-weight:900}
+.games{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.game{padding:18px;border-radius:22px;border:1px solid #681cff;background:linear-gradient(150deg,#080a22,#16002c);text-align:center}.icon{width:112px;height:112px;margin:0 auto 12px;border-radius:24px;display:grid;place-items:center;font-size:42px;background:radial-gradient(circle,#9a00ff,#11143b 65%);border:2px solid #cf2dff;box-shadow:0 0 22px #8c00ff66}.game h3{margin:7px 0}.tag{display:inline-block;padding:7px 12px;border-radius:20px;background:#111d62;color:#b9d5ff}.select{margin-top:14px}
+.info{color:#aeb9e7;line-height:1.5}.nav{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:18px}.nav div{text-align:center;color:#8e9bd4;padding:12px}.nav .active{color:#21c8ff}
+@media(max-width:650px){h1{font-size:34px}.status{grid-template-columns:1fr}.games{grid-template-columns:1fr}.keyrow{align-items:flex-start;flex-direction:column}.timer{font-size:24px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section id="login" class="panel login">
+    <h1>SENSI JAVIER</h1>
+    <div class="sub">Acceso al panel</div>
+    <h2>Introduce tu key</h2>
+    <input id="key" class="input" placeholder="SJ-TEST-2026-7KQ9-X4M2" autocomplete="off">
+    <button onclick="enter()">CONTINUAR</button>
+    <div id="err" class="err"></div>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <h1>SENSI JAVIER</h1>
+    <div class="sub">Tu acceso a una mejor experiencia</div>
+
+    <div class="panel status">
+      <div class="stat"><div class="label">iOS</div><div id="ios" class="value">Detectando…</div></div>
+      <div class="stat"><div class="label">Modelo</div><div id="model" class="value">Detectando…</div></div>
+      <div class="stat"><div class="label">Soporte</div><div id="support" class="value ok">COMPROBANDO…</div></div>
+    </div>
+
+    <div class="panel keyrow">
+      <div><div class="label">KEY VÁLIDA</div><div class="value">Tiempo restante de la key</div></div>
+      <div id="timer" class="timer">23:59:59</div>
+    </div>
+
+    <div class="panel">
+      <div class="label">JUEGOS</div>
+      <div class="games">
+        <div class="game"><div class="icon">⚡</div><h3>Free Fire</h3><span class="tag">Compatible</span><button class="select">SELECCIONAR</button></div>
+        <div class="game"><div class="icon">⚡</div><h3>Free Fire Max</h3><span class="tag">Compatible</span><button class="select">SELECCIONAR</button></div>
+      </div>
+    </div>
+
+    <div class="panel info"><b>Información</b><br>Esta key es válida para el rango configurado. El estado mostrado es una demostración del sistema de validación.</div>
+    <div class="nav"><div class="active">⌂<br>Inicio</div><div>🔑<br>Keys</div><div>⚙<br>Ajustes</div><div>ⓘ<br>Info</div></div>
+  </section>
+</div>
+<script>
+const TEST_KEY="SJ-TEST-2026-7KQ9-X4M2";
+function enter(){
+ const k=document.getElementById("key").value.trim(), e=document.getElementById("err");
+ if(k!==TEST_KEY){e.textContent="Key no válida.";return}
+ document.getElementById("login").classList.add("hidden");
+ document.getElementById("dashboard").classList.remove("hidden");
+ detectIOS();
+ let end=Date.now()+24*60*60*1000;
+ setInterval(()=>{let s=Math.max(0,Math.floor((end-Date.now())/1000));let h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;
+ document.getElementById("timer").textContent=[h,m,x].map(v=>String(v).padStart(2,"0")).join(":")},500);
+}
+function applyNativeDeviceInfo(info){
+  document.getElementById("ios").textContent = "iOS " + info.ios;
+  document.getElementById("model").textContent = info.model;
+  document.getElementById("support").textContent = "COMPATIBLE";
+}
+function requestNativeDeviceInfo(){
+  if(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.deviceInfo){
+    window.webkit.messageHandlers.deviceInfo.postMessage({request:"deviceInfo"});
+  } else {
+    document.getElementById("support").textContent = "WEB";
+  }
+}
+
+function detectIOS(){
+ let m=navigator.userAgent.match(/OS (\d+)[._](\d+)?/i);
+ document.getElementById("ios").textContent=m?"iOS "+m[1]+(m[2]?"."+m[2]:""):"iOS";
+}
+</script>
+</body>
+</html>
