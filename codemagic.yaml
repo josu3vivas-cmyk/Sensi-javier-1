@@ -1,2 +1,18 @@
-workflows:
-sample-workflow:
+integrations:
+app_store_connect:
+MyConnect
+environment:
+xcode: latest
+cocoapods: default
+name: Install Pods
+script: pod install
+name: Build ipa
+script: xcodebuild -workspace
+SensiJavier.xcworkspace -scheme
+SensiJavier -sdk iphoneos -configurati
+Release -destination 'generic/
+platform=ios' ARCHS="arm64"
+CODE_SIGN_IDENTITY=""
+CODE_SIGN_REQUIRED="NO"
+VALIDATE_PRODUCT=YES archive
+archivePath SensiJavier.xcarchive
