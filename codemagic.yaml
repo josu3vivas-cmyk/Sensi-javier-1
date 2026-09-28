@@ -7,4 +7,4 @@ workflows:
     scripts:
       - name: Build ipa
         script: >
-          xcodebuild -workspace SensiJavier.xcworkspace -scheme SensiJavier -sdk iphoneos -configuration Release -destination 'generic/platform=ios' ARCHS="arm64" CODE_SIGN_IDENTITY="" CODE_SIGN_REQUIRED="NO" VALIDATE_PRODUCT=YES archive -archivePath SensiJavier.xcarchive
+          xcodebuild -project project.pbxproj -scheme SensiJavier -sdk iphoneos -configuration Release -destination 'generic/platform=ios' ARCHS='arm64' CODE_SIGN_IDENTITY="" CODE_SIGN_REQUIRED=NO VALIDATE_PRODUCT=YES archive -archivePath SensiJavier.xcarchive
