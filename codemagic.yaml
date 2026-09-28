@@ -1,5 +1,5 @@
 integrations:
-app_store_connect:MyConnect
+app_store_connect:  MyConnect
 environment:
 xcode: latest
 cocoapods: default
