@@ -1,10 +1,42 @@
 workflows:
   ios-build:
-    name: iOS Build
+    name: Sensi Javier iOS Build
+
     environment:
       xcode: latest
       cocoapods: default
+
     scripts:
-      - name: Build ipa
-        script: >
-          xcodebuild -project project.pbxproj -scheme SensiJavier -sdk iphoneos -configuration Release -destination 'generic/platform=ios' ARCHS='arm64' CODE_SIGN_IDENTITY="" CODE_SIGN_REQUIRED=NO VALIDATE_PRODUCT=YES archive -archivePath SensiJavier.xcarchive
+      - name: Build archive
+        script: |
+          set -e
+
+          xcodebuild \
+            -project project.pbxproj \
+            -scheme SensiJavier \
+            -sdk iphoneos \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            ARCHS=arm64 \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            archive \
+            -archivePath "$CM_BUILD_DIR/SensiJavier.xcarchive"
+
+      - name: Create IPA
+        script: |
+          set -e
+
+          mkdir -p "$CM_BUILD_DIR/Payload"
+
+          cp -R "$CM_BUILD_DIR/SensiJavier.xcarchive/Products/Applications/"*.app \
+                "$CM_BUILD_DIR/Payload/"
+
+          cd "$CM_BUILD_DIR"
+
+          zip -r SensiJavier.ipa Payload
+
+    artifacts:
+      - "*.ipa"
+      - "*.xcarchive"
