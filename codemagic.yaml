@@ -1,8 +1,6 @@
 workflows:
   ios-build:
     name: iOS Build
-    integrations:
-      app_store_connect: MyConnect
     environment:
       xcode: latest
       cocoapods: default
